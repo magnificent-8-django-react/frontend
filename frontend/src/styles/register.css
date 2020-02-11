@@ -1,0 +1,38 @@
+.title {
+    margin-top: 110px;
+    margin-bottom: 50px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.reg-wrapper {
+    width: 230px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.flexout {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.round-shape {
+    border-radius: 20px;
+    background: #dbd7d2;
+    text-align: center;
+}
+
+.submit-color {
+    background: #33E1FF;
+    height: 50px;
+    width: 120px;
+    font-size: 24px;
+    border-radius: 25px;
+    box-shadow: 5px 10px 10px #888888;
+}
+
+div {
+    font-family: PMingLiU-ExtB;
+}
