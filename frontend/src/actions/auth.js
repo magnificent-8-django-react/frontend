@@ -108,7 +108,7 @@ export const reset = (username, password) => dispatch => {
 };
 
 // Register new user
-export const register = ({ username, email, password, groups }) => dispatch => {
+export const register = ({ username, email, password }) => dispatch => {
     // Headers
     const config = {
         headers: {
@@ -117,16 +117,15 @@ export const register = ({ username, email, password, groups }) => dispatch => {
     }
 
     // Request Body 
-    const body = JSON.stringify({ username, email, password, groups });
-    console.log(body);
+    const body = JSON.stringify({ username, email, password });
     axios
-      .post('http://127.0.0.1:8000/users/api/auth/register', body, config)
+      .post('https://drive-dine-backend.herokuapp.com/user/api/auth/register', body, config)
       .then(res => {
           dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
           });
-
+          alert("You have successfully registered an account. Please login.");
       })
       .catch(err => {
           dispatch({

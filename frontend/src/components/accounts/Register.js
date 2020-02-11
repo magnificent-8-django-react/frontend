@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import '../../styles/register.css';
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { register } from "../../actions/auth";
 
 
 export class Register extends Component {
@@ -8,13 +12,29 @@ export class Register extends Component {
     email: "", 
     password: "",
     rePassword: "",
+    justRegister: false
   };
 
+  static propTypes = {
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+  };
+
+  componentDidMount() {
+    this.setState({justRegister: false});
+  }
 
   onSubmit = e => {
     e.preventDefault();
     if(this.state.password === this.state.rePassword) {
-      console.log(this.state.username, this.state.email, this.state.password);
+      const { username, email, password } = this.state;
+      const newUser = {
+          username,
+          password,
+          email
+      };
+      this.props.register(newUser);
+      this.setState({justRegister: true});
     }
     else {
       alert("Password confirmation does not match")
@@ -26,6 +46,9 @@ export class Register extends Component {
   }
 
   render() {
+    if(this.state.justRegister) {
+      return <Redirect to="/login"/>;
+    }
     const { username, email, password, rePassword } = this.state;
     return (
       <div>
@@ -80,4 +103,9 @@ export class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { register })(Register);
