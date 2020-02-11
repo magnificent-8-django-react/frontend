@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Login from "./components/accounts/Login";
 import Register from "./components/accounts/Register";
-import Header from "./components/layout/Header";
+// import Header from "./components/layout/Header";
 import Home from "./components/Home";
 
 // import PrivateRoute from "./components/common/PrivateRoute";
@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <Provider store={store}>
           <Router>
-            <Header/>
+            {/* <Header/> */}
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/login" component={Login}/>
