@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import SideBar from './components/sidebar/sidebar';
+import './App.css';
+
 import Login from "./components/accounts/Login";
 import Register from "./components/accounts/Register";
 import Header from "./components/layout/Header";
@@ -20,6 +23,7 @@ class App extends Component {
 
   render() {
     return (
+      <div id="App">
       <Provider store={store}>
           <Router>
             <Header/>
@@ -30,6 +34,10 @@ class App extends Component {
             </Switch>
           </Router>
       </Provider>
+      
+        <SideBar />
+        <div id="page-wrap"></div>
+      </div>
     );
   }
 }
