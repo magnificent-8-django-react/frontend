@@ -12,8 +12,8 @@ var myIcon = L.icon({
 export default class Home extends Component {
     state = {
         location: {
-            lat: null,
-            lng: null
+            lat: 0,
+            lng: 0
         },
         zoom: 13
     }
