@@ -23,8 +23,9 @@ export default class Login extends Component {
                     Forgot password?
                 </p>
 
-                <button type="submit" className="btn btn-primary btn-block">Get Started</button>
+                <button type="submit" className="btn btn-primary btn-block btn-get-started">Get Started</button>
 
+                <button type="submit" className="btn btn-primary btn-block btn-create-account">Create Account</button>
             </form>
             </div>
         );
