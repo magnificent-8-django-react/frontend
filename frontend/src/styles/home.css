@@ -25,3 +25,7 @@
     cursor: pointer;
 }
 
+.markerLabel{
+    position: absolute;
+    font-weight: bold;
+}

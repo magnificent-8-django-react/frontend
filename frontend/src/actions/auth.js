@@ -119,7 +119,7 @@ export const register = ({ username, email, password }) => dispatch => {
     // Request Body 
     const body = JSON.stringify({ username, email, password });
     axios
-      .post('https://drive-dine-backend.herokuapp.com/user/api/auth/register', body, config)
+      .post('http://127.0.0.1:8000/user/api/auth/register', body, config)
       .then(res => {
           dispatch({
             type: REGISTER_SUCCESS,
