@@ -31,10 +31,10 @@ export default class Home extends Component {
             {
                 id: 1,
                 truck: 'Hive Food Truck',
-                lat: 0,
-                lng: 0
-                // lat: 36.7342,
-                // lng: -119.7789
+                // lat: 0,
+                // lng: 0
+                lat: 36.7342,
+                lng: -119.7789
             },
             {
                 id: 2,
