@@ -31,8 +31,10 @@ export default class Home extends Component {
             {
                 id: 1,
                 truck: 'Hive Food Truck',
-                lat: 36.7342,
-                lng: -119.7789
+                lat: 0,
+                lng: 0
+                // lat: 36.7342,
+                // lng: -119.7789
             },
             {
                 id: 2,
@@ -65,6 +67,23 @@ export default class Home extends Component {
         alert('Allow your device location to render your location');
     };
 
+    renderTrucks(truck) {
+        if(truck.lat === 0 && truck.lng === 0) {
+            return "";
+        }
+        else {
+            return(
+                <Marker 
+                    key={truck.id}
+                    position={[truck.lat, truck.lng]}
+                    icon={foodIcon}
+                > 
+                    <Tooltip className="markerLabel" permanent={true}>{truck.truck}</Tooltip>
+                </Marker>
+            )
+        }
+    }
+
     render() {
         let lat = this.state.mylat;
         let lng = this.state.mylng;
@@ -75,19 +94,20 @@ export default class Home extends Component {
                         : 
                         <span className="disableLocation" onClick={this.alertLocation}>Location Disabled</span>
                     }
-                <Map className="map" center={[lat, lng]} zoom={this.state.zoom}>
+                <Map className="map" center={[lat, lng]} zoom={this.state.zoom} zoomControl={true}>
                     <TileLayer
                     attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {this.state.locations.map( location => (
-                        <Marker 
-                            key={location.id}
-                            position={[location.lat, location.lng]}
-                            icon={foodIcon}
-                        > 
-                            <Tooltip className="markerLabel" permanent={true}>{location.truck}</Tooltip>
-                        </Marker>
+                        this.renderTrucks(location)
+                        // <Marker 
+                        //     key={location.id}
+                        //     position={[location.lat, location.lng]}
+                        //     icon={foodIcon}
+                        // > 
+                        //     <Tooltip className="markerLabel" permanent={true}>{location.truck}</Tooltip>
+                        // </Marker>
                     ))}
                     {this.state.location_permission ?
                         <Marker
