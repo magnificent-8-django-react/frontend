@@ -4,6 +4,7 @@ import L from 'leaflet';
 import '../styles/home.css';
 import userIcon from '../img/person.png';
 import truckIcon from '../img/pointer.png';
+import axios from 'axios';
 
 
 let myIcon = L.icon({
@@ -27,22 +28,7 @@ export default class Home extends Component {
         zoom: 10,
         location_permission: true,
         labels: [],
-        locations: [
-            {
-                id: 1,
-                truck: 'Hive Food Truck',
-                // lat: 0,
-                // lng: 0
-                lat: 36.7342,
-                lng: -119.7789
-            },
-            {
-                id: 2,
-                truck: '41 Food Truck',
-                lat: 36.7356,
-                lng: -119.7782
-            },
-        ]
+        locations: []
     }
 
     componentDidMount() {
@@ -55,6 +41,15 @@ export default class Home extends Component {
             this.setState({location_permission: false});
             console.log('Do something else when user location is not provided');
         });
+        axios
+          .get('http://127.0.0.1:8000/restaurant/profiles/')
+          .then( res => {
+              this.setState({ locations: res.data.results });
+              console.log(this.state.locations);
+          })
+          .catch( err => {
+              console.log(err)
+          })
     };
 
     refresh = e => {
@@ -68,17 +63,17 @@ export default class Home extends Component {
     };
 
     renderTrucks(truck) {
-        if(truck.lat === 0 && truck.lng === 0) {
+        if(truck.lat === 0 && truck.long === 0) {
             return "";
         }
         else {
             return(
                 <Marker 
                     key={truck.id}
-                    position={[truck.lat, truck.lng]}
+                    position={[truck.lat, truck.long]}
                     icon={foodIcon}
                 > 
-                    <Tooltip className="markerLabel" permanent={true}>{truck.truck}</Tooltip>
+                    <Tooltip className="markerLabel" permanent={true}>{truck.restaurant}</Tooltip>
                 </Marker>
             )
         }
@@ -101,13 +96,6 @@ export default class Home extends Component {
                     />
                     {this.state.locations.map( location => (
                         this.renderTrucks(location)
-                        // <Marker 
-                        //     key={location.id}
-                        //     position={[location.lat, location.lng]}
-                        //     icon={foodIcon}
-                        // > 
-                        //     <Tooltip className="markerLabel" permanent={true}>{location.truck}</Tooltip>
-                        // </Marker>
                     ))}
                     {this.state.location_permission ?
                         <Marker
