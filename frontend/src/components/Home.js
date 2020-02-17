@@ -23,6 +23,8 @@ let foodIcon = L.icon({
 
 export default class Home extends Component {
     state = {
+        // mylat: 36.7378,
+        // mylng: -119.7871,
         mylat: 0,
         mylng: 0,
         zoom: 10,
@@ -37,6 +39,12 @@ export default class Home extends Component {
             this.setState({ mylng: position.coords.longitude});
             this.setState({location_permission: true});
             this.setState({zoom: 16});
+            console.log(this.state.mylat, this.state.mylng);
+
+            // If truck user, <Test if owners in restaurantProfiles have the same id as user>
+              // True --> <Do an axios.put to update the corresponding truck location with mylat/mylng states above>
+              // False --> <Continue, no need to update user location because they do not have lat/long fields>
+
         }, () => {
             this.setState({location_permission: false});
             console.log('Do something else when user location is not provided');
@@ -45,12 +53,15 @@ export default class Home extends Component {
           .get('http://127.0.0.1:8000/restaurant/profiles/')
           .then( res => {
               this.setState({ locations: res.data.results });
-              console.log(this.state.locations);
           })
           .catch( err => {
               console.log(err)
           })
     };
+
+    componentWillUnmount() {
+        console.log('Default the user locaton');
+    }
 
     refresh = e => {
         e.preventDefault();

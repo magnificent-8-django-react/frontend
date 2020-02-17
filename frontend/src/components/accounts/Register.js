@@ -35,7 +35,6 @@ export class Register extends Component {
       .get('http://127.0.0.1:8000/users/')
       .then( res => {
         this.setState({ users: res.data.results });
-        console.log(res.data.length)
       })
       .catch( err => { console.log(err) })
   }
