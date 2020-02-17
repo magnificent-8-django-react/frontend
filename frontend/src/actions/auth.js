@@ -131,7 +131,7 @@ export const register = ({ username, email, password }) => dispatch => {
           dispatch({
               type: REGISTER_FAIL
           });
-          alert("Username cannot include spaces (OR) Invalid information was provided");
+          alert("Username cannot include spaces (OR) Username is already in use");
 
       });
 };

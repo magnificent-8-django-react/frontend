@@ -18,6 +18,20 @@
     margin-top: 30px;
 }
 
+.valid {
+    font-size: 20px;
+    color: green;
+    float: right;
+    position: absolute;
+    left: 240px;
+    bottom: 3px;
+}
+
+.valid-text {
+    margin: 0;
+    color: red;
+}
+
 .round-shape {
     border-radius: 20px;
     background: #dbd7d2;
@@ -31,6 +45,19 @@
     font-size: 24px;
     border-radius: 25px;
     box-shadow: 5px 10px 10px #888888;
+}
+
+.submit-disable {
+    background: #DBD7D2;
+    height: 50px;
+    width: 120px;
+    font-size: 24px;
+    border-radius: 25px;
+    box-shadow: 5px 10px 10px #888888;
+}
+
+.relative {
+    position: relative;
 }
 
 div {
