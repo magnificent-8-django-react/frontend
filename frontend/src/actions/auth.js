@@ -36,7 +36,7 @@ export const loadUser = () => (dispatch, getState) => {
     }
 
     axios
-      .get('http://127.0.0.1:8000/users/api/auth/user', config)
+      .get('http://127.0.0.1:8000/user/api/auth/user', config)
       .then(res => {
           dispatch({
             type: USER_LOADED,
@@ -63,7 +63,7 @@ export const login = (username, password) => dispatch => {
     const body = JSON.stringify({ username, password });
 
     axios
-      .post('http://127.0.0.1:8000/users/api/auth/login', body, config)
+      .post('http://127.0.0.1:8000/user/api/auth/login', body, config)
       .then(res => {
           dispatch({
             type: LOGIN_SUCCESS,
@@ -91,7 +91,7 @@ export const reset = (username, password) => dispatch => {
     const body = JSON.stringify({ username, password });
 
     axios
-      .put('http://127.0.0.1:8000/users/passwords', body, config)
+      .put('http://127.0.0.1:8000/user/passwords', body, config)
       .then(res => {
           dispatch({
             type: RESET_SUCCESS,
@@ -154,7 +154,7 @@ export const logout = () => (dispatch, getState) => {
     }
 
     axios
-      .post('http://127.0.0.1:8000/users/api/auth/logout', null, config)
+      .post('http://127.0.0.1:8000/user/api/auth/logout', null, config)
       .then(res => {
           dispatch({
             type: LOGOUT_SUCCESS,
