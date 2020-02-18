@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
-
+import axios from 'axios';
 
 export class Register extends Component {
   state = {
@@ -12,7 +12,11 @@ export class Register extends Component {
     email: "", 
     password: "",
     rePassword: "",
-    justRegister: false
+    justRegister: false,
+    users: [],
+    usernameValid: false,
+    usernameUnique: false,
+    usernamePass: false
   };
 
   static propTypes = {
@@ -21,7 +25,18 @@ export class Register extends Component {
   };
 
   componentDidMount() {
-    this.setState({justRegister: false});
+    this.setState({
+      justRegister: false,
+      usernameValid: true,
+      usernameUnique: true,
+      usernamePass: false
+    });
+    axios
+      .get('http://127.0.0.1:8000/users/')
+      .then( res => {
+        this.setState({ users: res.data.results });
+      })
+      .catch( err => { console.log(err) })
   }
 
   onSubmit = e => {
@@ -41,6 +56,33 @@ export class Register extends Component {
     }
   };
 
+  onChangeUser = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      usernameValid: true,
+      usernameUnique: true,
+      usernamePass: true
+    });
+    for(let j=0; j<this.state.users.length; j++) {
+      if(e.target.value === this.state.users[j].username) {
+        this.setState({ usernameUnique: false });
+        this.setState({ usernamePass: false });
+        break;
+      }
+    }
+    for(let i=0; i<e.target.value.length; i++) {
+      if(e.target.value[i] === " ") {
+        this.setState({ usernameValid: false });
+        this.setState({ usernamePass: false });
+        console.log(this.state.users);
+        break;
+      }
+    }
+    if(e.target.value.length === 0) {
+      this.setState({ usernamePass: false });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -54,15 +96,19 @@ export class Register extends Component {
       <div>
           <h1 className="text-center title">Create Account</h1>
           <form onSubmit={this.onSubmit}>
-            <div className="form-group reg-wrapper">
+            <div className="form-group reg-wrapper relative">
               <label><strong>Username</strong></label>
               <input
                 type="text"
                 className="form-control round-shape"
                 name="username"
-                onChange={this.onChange}
+                onChange={this.onChangeUser}
                 value={username}
+                required
               />
+              {this.state.usernameValid ? "" : <p className="valid-text">Username cannot contain spaces</p>}
+              {this.state.usernameUnique ? "" : <p className="valid-text">Username is already taken</p>}
+              {this.state.usernamePass ? <span className="valid">&#10004;</span> : ""}
             </div>
             <div className="form-group reg-wrapper">
               <label><strong>Email</strong></label>
@@ -72,6 +118,7 @@ export class Register extends Component {
                 name="email"
                 onChange={this.onChange}
                 value={email}
+                required
               />
             </div>
             <div className="form-group reg-wrapper">
@@ -82,6 +129,7 @@ export class Register extends Component {
                 name="password"
                 onChange={this.onChange}
                 value={password}
+                required
               />
             </div>
             <div className="form-group reg-wrapper">
@@ -92,10 +140,15 @@ export class Register extends Component {
                 name="rePassword"
                 onChange={this.onChange}
                 value={rePassword}
+                required
               />
             </div>
             <div className="form-group flexout">
-              <button type="submit" className="btn submit-color">Submit</button>
+              {this.state.usernamePass ? 
+                <button type="submit" className="btn submit-color">Submit</button>
+                :
+                <button type="submit" className="btn submit-disable" disabled>Submit</button>
+              }
             </div>
           </form>
       </div>
